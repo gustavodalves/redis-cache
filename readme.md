@@ -27,6 +27,3 @@ To start the Redis container, use the following command:
 
 ```bash
 docker-compose up -d
-
-```bash
-npm install
