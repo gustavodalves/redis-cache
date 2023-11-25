@@ -1,0 +1,36 @@
+version: '3'
+
+volumes:
+  mysql:
+    driver: local
+
+services:
+  database:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    volumes:
+      - mysql:/var/lib/mysql
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    image: app
+    container_name: redis-cache
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/redis-cache
+    links:
+      - database
+      - redis
+    depends_on:
+      - database
+      - redis
